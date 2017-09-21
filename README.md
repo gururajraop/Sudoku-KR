@@ -1,2 +1,4 @@
 # Sudoku-KR
-ccj
+
+Contributors: Gururaja Rao P & Linda Petrini
+
