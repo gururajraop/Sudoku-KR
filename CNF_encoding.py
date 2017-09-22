@@ -1,4 +1,6 @@
 import numpy as np
+import csv
+import pycosat
 
 
 def sudoku_names(Dim):
@@ -145,3 +147,32 @@ def encoding_CNF(encode, var2):
         writer.write("p cnf {0} {1}".format(str(var2), str(len(encode))))
         for d in data:
             writer.write("{} 0 \n".format(" ".join(str(_) for _ in d)))
+
+
+def begin():
+    sudoku = np.array(list(csv.reader(open("Sample.csv", "r"), delimiter=","))).astype(int)
+    #sudoku = np.array([ [0,6,0,0,0,0,0,1,0],
+    #                [0,0,3,0,8,6,5,0,0],
+    #                [7,0,0,0,0,1,0,0,9],
+    #                [5,0,0,0,2,0,0,0,6],
+    #                [0,0,0,1,5,3,0,0,0],
+    #                [9,0,0,0,7,0,0,0,1],
+    #                [4,0,0,0,0,9,0,0,7],
+    #                [0,0,9,0,6,7,3,0,0],
+    #                [0,5,0,0,0,0,0,9,0]])
+    print(sudoku)
+    Dim = len(sudoku[0])
+
+    encode = encode_sudoku(sudoku, Dim)
+    solution = pycosat.solve(encode)
+    decode_sudoku(solution, Dim)
+
+    new_encode, variables = k_SAT(9, encode, 3)
+    new_solution = pycosat.solve(new_encode)
+    decode_sudoku(new_solution, Dim)
+
+
+begin()
+
+
+
