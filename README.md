@@ -23,4 +23,3 @@ For more details and test click [here](https://github.com/pascalesser/minisat.gi
 ```shell
 $python3 CNF_encoding.py
 ```
-
