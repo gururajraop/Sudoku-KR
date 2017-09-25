@@ -1,6 +1,6 @@
 import numpy as np
 import csv
-import pycosat
+# import pycosat
 
 
 def sudoku_names(Dim):
