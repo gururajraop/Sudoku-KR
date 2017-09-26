@@ -42,7 +42,7 @@ def encode_constraints(sudoku):
     for row in range(Dim):
         for column in range(Dim):
             if (sudoku[row, column] != 0):
-                arr = [names[row, column, sudoku[row, column] - 1].tolist()]
+                arr = [names[row, column, int(sudoku[row, column]) - 1].tolist()]
                 encode.append(arr)
     return encode
 
