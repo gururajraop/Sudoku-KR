@@ -77,7 +77,7 @@ def encode_dummy_var_3sat(names, var_count, k):
 
 
 
-def general_encoding(dim, k):
+def general_encoding(dim):
     names = CNF.sudoku_names(dim)
     encode = []
     var_count = dim ** 3
@@ -130,10 +130,3 @@ def general_encoding(dim, k):
                     encode.extend(CNF.encode_exactly_one(new_variables))
 
     return encode, var_count
-
-
-
-
-
-
-
