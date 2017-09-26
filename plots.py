@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 START, END = 4000, 4100
 PUZZLE_SIZE = 3
 puzzle_size = PUZZLE_SIZE**2
-STAT_DIR_N = "./stat/"+str(PUZZLE_SIZE)+"/"
-STAT_DIR_3SAT = "./stat/"+str(PUZZLE_SIZE)+"_3SAT/"
-STAT_DIR_BE = "./stat/"+str(PUZZLE_SIZE)+"_BE/"
+STAT_DIR_N = "./stat/"+str(PUZZLE_SIZE)+"/"+str(PUZZLE_SIZE)+"/"
+STAT_DIR_3SAT = "./stat/"+str(PUZZLE_SIZE)+"/"+str(PUZZLE_SIZE)+"_3SAT/"
+STAT_DIR_BE = "./stat/"+str(PUZZLE_SIZE)+"/"+str(PUZZLE_SIZE)+"_BE/"
 
 file_names = ["final_conflicts_cpu",
               "final_conflicts_literals", "final_conflicts", "final_cpu_time",
@@ -38,7 +38,7 @@ for i in range(len(file_names)):
     bins = np.linspace(min_graph, max_graph, 30)
     plt.hist(actual_array_n, bins, color = 'y', alpha=0.3, label = 'naive')
     plt.hist(actual_array_3sat, bins, color = 'g', alpha=0.3, label = '3sat')
-    plt.hist(actual_array_be, bins, color='g', alpha=0.3, label='optimised')
+    plt.hist(actual_array_be, bins, color='r', alpha=0.3, label='optimised')
 
     plt.title(file_names[i])
     plt.legend()
@@ -47,5 +47,5 @@ for i in range(len(file_names)):
 
 plt.show()
 
-print
+
 

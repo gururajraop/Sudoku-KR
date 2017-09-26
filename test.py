@@ -10,4 +10,4 @@ with open('./hey.txt') as reader:
 
 
 # print actual_solution
-CNF.decode_sudoku(actual_solution, 16)
+CNF.decode_sudoku(actual_solution, 9)
