@@ -3,8 +3,8 @@ import os
 from bs4 import BeautifulSoup
 import numpy as np
 
-START, END = 4101, 4500
-PUZZLE_SIZE = 3
+START, END = 4000, 4500
+PUZZLE_SIZE = 5
 DOWNLOAD_DIR = "./scraped/"+str(PUZZLE_SIZE)+"/"
 PUZZLE_DIR = "./puzzles/"+str(PUZZLE_SIZE)+"/"
 

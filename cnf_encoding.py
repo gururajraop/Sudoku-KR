@@ -1,6 +1,5 @@
 import numpy as np
-import csv
-# import pycosat
+import os
 
 
 def sudoku_names(Dim):
@@ -36,13 +35,15 @@ def encode_exactly_one(names):
 
 
 # add constrains
-def encode_constraints(sudoku, Dim, names):
+def encode_constraints(sudoku):
+    Dim = len(sudoku)
+    names = sudoku_names(Dim)
     encode = []
     for row in range(Dim):
         for column in range(Dim):
-            if (sudoku[row, column] != 0):
-                arr = [names[row, column, sudoku[row, column] - 1].tolist()]
-                encode.insert(0, arr)
+            if sudoku[row, column] != 0:
+                arr = [names[row, column, int(sudoku[row, column]) - 1].tolist()]
+                encode.append(arr)
     return encode
 
 
@@ -62,12 +63,9 @@ def get_block_positions(Dim):
     return block_positions
 
 
-def encode_sudoku(sudoku, Dim):
+def general_encoding(Dim):
     names = sudoku_names(Dim)
     encode = []
-    constraints = encode_constraints(sudoku, Dim, names)
-    encode.extend(constraints)
-
     # for each cell, exactly one value
     for row in range(Dim):
         for column in range(Dim):
@@ -102,15 +100,23 @@ def encode_sudoku(sudoku, Dim):
     return encode
 
 
+def encode_sudoku(sudoku):
+    encode = general_encoding(sudoku)
+    Dim = len(sudoku)
+    names = sudoku_names(Dim)
+    constraints = encode_constraints(sudoku)
+    encode.extend(constraints)
+
+    return encode
+
+
 def decode_sudoku(solution, Dim):
     names = sudoku_names(Dim)
     sudoku = np.zeros([Dim, Dim], dtype=np.int)
-    indexes = []
     for el in solution:
         if el > 0:
             index = np.where(names == el)
-            for num in index:
-                sudoku[index[0], index[1]] = index[2] + 1
+            sudoku[index[0], index[1]] = index[2] + 1
 
     print(sudoku)
 
@@ -118,8 +124,8 @@ def decode_sudoku(solution, Dim):
 def reduce_clause(clause, k, var_count):
     clause_1 = clause[:(k - 1)]
     clause_2 = clause[(k - 1):]
-    clause_1.append(var_count + 1)
-    clause_2.append(-1 * (var_count + 1))
+    clause_1.extend([var_count + 1])
+    clause_2.extend([-1 * (var_count + 1)])
 
     return clause_1, clause_2
 
@@ -128,10 +134,9 @@ def k_SAT(dim, code, k):
     encode = []
     variables = dim ** 3
     for clause in code:
-
         while len(clause) > k:
             clause_1, clause_2 = reduce_clause(clause, k, variables)
-            clause = clause_2
+            clause = clause_2[:]
             encode.append(clause_1)
             variables += 1
         encode.append(clause)
@@ -139,40 +144,9 @@ def k_SAT(dim, code, k):
     return encode, variables
 
 
-def encoding_CNF(encode, var2):
-    import os
-    data = encode
-    with open(os.path.join("./", "sudoku.txt"), "w") as writer:
-        # var = str(var2) + str(len(encode))
-        writer.write("p cnf {0} {1}".format(str(var2), str(len(encode))))
-        for d in data:
+def encoding_CNF(encode, var2, puzzle_no, ENCODING_DIR):
+
+    with open(os.path.join(ENCODING_DIR, "{}.txt".format(puzzle_no)), "w") as writer:
+        writer.write("p cnf {} {} \n".format(str(var2), str(len(encode))))
+        for d in encode:
             writer.write("{} 0 \n".format(" ".join(str(_) for _ in d)))
-
-
-def begin():
-    sudoku = np.array(list(csv.reader(open("Sample.csv", "r"), delimiter=","))).astype(int)
-    #sudoku = np.array([ [0,6,0,0,0,0,0,1,0],
-    #                [0,0,3,0,8,6,5,0,0],
-    #                [7,0,0,0,0,1,0,0,9],
-    #                [5,0,0,0,2,0,0,0,6],
-    #                [0,0,0,1,5,3,0,0,0],
-    #                [9,0,0,0,7,0,0,0,1],
-    #                [4,0,0,0,0,9,0,0,7],
-    #                [0,0,9,0,6,7,3,0,0],
-    #                [0,5,0,0,0,0,0,9,0]])
-    print(sudoku)
-    Dim = len(sudoku[0])
-
-    encode = encode_sudoku(sudoku, Dim)
-    solution = pycosat.solve(encode)
-    decode_sudoku(solution, Dim)
-
-    new_encode, variables = k_SAT(9, encode, 3)
-    new_solution = pycosat.solve(new_encode)
-    decode_sudoku(new_solution, Dim)
-
-
-begin()
-
-
-
