@@ -1,10 +1,10 @@
 import cnf_encoding as cnf
-import better_encoding as be
 import os
 import numpy as np
 
+
 # define global variables and paths
-START, END = 4000, 4500
+START, END = 4000, 4010
 PUZZLE_SIZE = 3
 puzzle_size = PUZZLE_SIZE ** 2
 PUZZLE_DIR = "./puzzles/" + str(PUZZLE_SIZE) + "/"
@@ -16,10 +16,9 @@ ENCODE_DIR_L = "./encodings/" + str(PUZZLE_SIZE) + "/layered/"
 sudoku = np.zeros((puzzle_size, puzzle_size))
 
 # encode the general rules
-encode_general_3sat, var_count_3sat = be.general_encoding_3sat(puzzle_size)
-encode_general_l, var_count_l = be.general_encoding_l(puzzle_size)
+encode_general_3sat, var_count_3sat = cnf.general_encoding_3sat(puzzle_size)
+encode_general_l, var_count_l = cnf.general_encoding_l(puzzle_size)
 encode_general_n = cnf.general_encoding(puzzle_size)
-
 
 
 # import the sudoku from txt file
@@ -49,6 +48,7 @@ for index in range(START, END + 1):
     encode_n = cnf.encoding_CNF(complete_encode_n, puzzle_size ** 3, index, ENCODE_DIR_N)
     encode_l = cnf.encoding_CNF(complete_encode_l, var_count_l + len(constraints), index, ENCODE_DIR_L)
     encode_3sat = cnf.encoding_CNF(complete_encode_3sat, var_count_3sat + len(constraints), index, ENCODE_DIR_3SAT)
+
 
     print('Sudoku {} encoded'.format(index))
 

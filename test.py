@@ -1,6 +1,6 @@
 import CNF_encoding_Linda as CNF
 
-with open('./hey.txt') as reader:
+with open(‘./solution.txt') as reader:
     file_solution = reader.read()
     solution = [s for s in file_solution.split(' ')]
     solution[0:1] = solution[0].split('\n')
