@@ -4,7 +4,7 @@
 * Gururaja Rao P
 * [Linda Petrini](https://github.com/LindaPetrini)
 
-
+## **More information:**
 * [Paper](https://github.com/gururajraop/Sudoku-KR/blob/master/Tex/report.pdf)
 * [Presentation](https://docs.google.com/presentation/d/1LLf5MYiiOk9Ahzr1Jxybnudsi8cje2qFx2RU3oixYFY/edit?usp=sharing)
               
