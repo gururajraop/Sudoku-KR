@@ -1,8 +1,12 @@
 # Sudoku-KR
 
-**Contributors:**
+## **Contributors:**
 * Gururaja Rao P
-* Linda Petrini
+* [Linda Petrini](https://github.com/LindaPetrini)
+
+
+* [Paper](https://github.com/gururajraop/Sudoku-KR/blob/master/Tex/report.pdf)
+* [Presentation](https://docs.google.com/presentation/d/1LLf5MYiiOk9Ahzr1Jxybnudsi8cje2qFx2RU3oixYFY/edit?usp=sharing)
               
 ## **Requirements:**
 * OS: Linux/Mac
